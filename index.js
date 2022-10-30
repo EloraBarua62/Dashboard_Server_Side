@@ -47,19 +47,52 @@ async function run(){
         })
 
 
-        app.put('/update_product/:id', async (req, res) => {
+        // Role update
+        app.put('/update_role/:id', async (req, res) => {
             const id = req.params.id;
-            const updateQuantity = req.body;
+            const updateRole = req.body;
             const query = { _id: ObjectId(id) };
             const options = { upsert: true };
-            const updateBookInfo = {
+            const updateUserRole = {
                 $set: {
-                    quantity: updateQuantity.quantity
+                    role: updateRole.role
                 }
             };
-            const book = await booksCollection.updateOne(query, updateBookInfo, options);
-            res.send(book);
+            const data = await userCollection.updateOne(query, updateUserRole, options);
+            res.send(data);
         });
+
+        // Update product info
+        app.put('/update_product_info/:id', async (req, res) => {
+            const id = req.params.id;
+            const productInfo = req.body;
+            const query = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updateProductInfo = {
+                $set: {
+                    quantity: productInfo.quantity
+                }
+            };
+            const data = await productCollection.updateOne(query, updateProductInfo, options);
+            res.send(data);
+        });
+
+        // Update user info
+        app.put('/update_user_info/:id', async (req, res) => {
+            const id = req.params.id;
+            const userInfo = req.body;
+            const query = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updateUserInfo = {
+                $set: {
+                    name: userInfo.name
+                }
+            };
+            const data = await userCollection.updateOne(query, updateUserInfo, options);
+            res.send(data);
+        });
+
+
 
 
         // DELETE
